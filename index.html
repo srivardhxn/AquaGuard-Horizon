@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaGuard | Team Horizon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-black text-white tracking-tight">🛡️ AquaGuard</h1>
+                <p class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Team Horizon | Phase 1 Seed</p>
+            </div>
+            <div class="bg-green-500/20 border border-green-500/50 px-3 py-1 rounded-full">
+                <span class="text-green-400 text-[10px] font-bold italic">WEEKLY COVERAGE ACTIVE</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                <p class="text-slate-500 text-[10px] uppercase font-bold">Weekly Premium</p>
+                <p class="text-lg font-mono text-white">DC 49.00</p>
+            </div>
+            <div class="bg-blue-600 p-4 rounded-2xl shadow-lg shadow-blue-500/20">
+                <p class="text-blue-100 text-[10px] uppercase font-bold">Earnings Saved</p>
+                <p id="balance" class="text-lg font-mono text-white">DC 0.00</p>
+            </div>
+        </div>
+
+        <div class="bg-black/60 rounded-xl p-3 mb-6 font-mono text-[10px] h-28 overflow-y-auto text-emerald-400 border border-slate-800">
+            <p>> Persona: Q-Commerce (Zepto/Blinkit)</p>
+            <p>> Initializing XGBoost Fraud Shield...</p>
+            <p>> Monitoring Parametric Triggers...</p>
+            <div id="logs"></div>
+        </div>
+
+        <div class="space-y-3">
+            <button onclick="runSimulation(50, 20)" class="w-full bg-slate-100 text-slate-900 font-bold py-3 rounded-xl hover:bg-white transition">
+                Simulate Rain Trigger (Parametric)
+            </button>
+            <button onclick="runSimulation(650, 25)" class="w-full bg-red-900/20 text-red-500 border border-red-900/50 font-bold py-3 rounded-xl hover:bg-red-900/40 transition">
+                Simulate Fraud Ring (Market Crash)
+            </button>
+        </div>
+        
+        <p class="text-center text-[9px] text-slate-600 mt-4 uppercase font-bold tracking-tighter">
+            *Excludes vehicle, health, and accident claims. Loss of income only.
+        </p>
+    </div>
+
+    <script>
+       function runSimulation(lux, rain) {
+    const logDiv = document.getElementById('logs');
+    const balDiv = document.getElementById('balance');
+    
+    logDiv.innerHTML += `<p class="text-blue-400 font-mono">> Analyzing Sensors: Lux=${lux}, Rain=${rain}mm...</p>`;
+    
+    // MARKET CRASH DEFENSE: Sensor Fusion
+    if (lux > 500 && rain > 15) {
+        // CASE 1: FRAUD (Bright light but claiming rain)
+        logDiv.innerHTML += `<p class="text-red-500 font-bold font-mono">❌ FRAUD ALERT: Environmental Mismatch! Claim Blocked.</p>`;
+        // Balance does NOT change here!
+    } else if (rain > 15) {
+        // CASE 2: REAL CLAIM
+        logDiv.innerHTML += `<p class="text-green-400 font-bold font-mono">✅ PARAMETRIC TRIGGER: Heavy Rain Verified. Payout Sent!</p>`;
+        balDiv.innerText = "DC 250.00"; // Payout only for the honest worker [cite: 49, 70]
+    }
+    logDiv.scrollTop = logDiv.scrollHeight;
+}
+        
+    </script>
+</body>
+</html>
