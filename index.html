@@ -3,74 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaGuard | Team Horizon</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>AquaGuard | Register — Protect Your Worker</title>
+    <meta name="description" content="AquaGuard by Team Horizon — Register as a delivery worker and get AI-powered parametric income protection.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; background:var(--gradient-hero); position:relative; overflow:hidden; padding:40px 16px; }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1 class="text-2xl font-black text-white tracking-tight">🛡️ AquaGuard</h1>
-                <p class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Team Horizon | Phase 1 Seed</p>
-            </div>
-            <div class="bg-green-500/20 border border-green-500/50 px-3 py-1 rounded-full">
-                <span class="text-green-400 text-[10px] font-bold italic">WEEKLY COVERAGE ACTIVE</span>
-            </div>
-        </div>
+<div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
 
-        <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
-                <p class="text-slate-500 text-[10px] uppercase font-bold">Weekly Premium</p>
-                <p class="text-lg font-mono text-white">DC 49.00</p>
-            </div>
-            <div class="bg-blue-600 p-4 rounded-2xl shadow-lg shadow-blue-500/20">
-                <p class="text-blue-100 text-[10px] uppercase font-bold">Earnings Saved</p>
-                <p id="balance" class="text-lg font-mono text-white">DC 0.00</p>
-            </div>
-        </div>
-
-        <div class="bg-black/60 rounded-xl p-3 mb-6 font-mono text-[10px] h-28 overflow-y-auto text-emerald-400 border border-slate-800">
-            <p>> Persona: Q-Commerce (Zepto/Blinkit)</p>
-            <p>> Initializing XGBoost Fraud Shield...</p>
-            <p>> Monitoring Parametric Triggers...</p>
-            <div id="logs"></div>
-        </div>
-
-        <div class="space-y-3">
-            <button onclick="runSimulation(50, 20)" class="w-full bg-slate-100 text-slate-900 font-bold py-3 rounded-xl hover:bg-white transition">
-                Simulate Rain Trigger (Parametric)
-            </button>
-            <button onclick="runSimulation(650, 25)" class="w-full bg-red-900/20 text-red-500 border border-red-900/50 font-bold py-3 rounded-xl hover:bg-red-900/40 transition">
-                Simulate Fraud Ring (Market Crash)
-            </button>
-        </div>
-        
-        <p class="text-center text-[9px] text-slate-600 mt-4 uppercase font-bold tracking-tighter">
-            *Excludes vehicle, health, and accident claims. Loss of income only.
-        </p>
+<div class="container-narrow">
+    <div class="logo-area">
+        <div class="logo-icon"></div>
+        <h1 class="logo-text">AquaGuard</h1>
+        <p class="logo-sub">by Team Horizon &bull; Phase 2: Protect Your Worker</p>
     </div>
 
-    <script>
-       function runSimulation(lux, rain) {
-    const logDiv = document.getElementById('logs');
-    const balDiv = document.getElementById('balance');
-    
-    logDiv.innerHTML += `<p class="text-blue-400 font-mono">> Analyzing Sensors: Lux=${lux}, Rain=${rain}mm...</p>`;
-    
-    // MARKET CRASH DEFENSE: Sensor Fusion
-    if (lux > 500 && rain > 15) {
-        // CASE 1: FRAUD (Bright light but claiming rain)
-        logDiv.innerHTML += `<p class="text-red-500 font-bold font-mono">❌ FRAUD ALERT: Environmental Mismatch! Claim Blocked.</p>`;
-        // Balance does NOT change here!
-    } else if (rain > 15) {
-        // CASE 2: REAL CLAIM
-        logDiv.innerHTML += `<p class="text-green-400 font-bold font-mono">✅ PARAMETRIC TRIGGER: Heavy Rain Verified. Payout Sent!</p>`;
-        balDiv.innerText = "DC 250.00"; // Payout only for the honest worker [cite: 49, 70]
+    <div class="card glass-card" id="reg-card">
+        <div class="card-header">
+            <h2>Worker Registration</h2>
+            <p>Join 12,400+ delivery partners protected across India</p>
+        </div>
+        <form id="registration-form" onsubmit="handleRegistration(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input id="reg-name" type="text" placeholder="e.g. Ravi Kumar" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Mobile Number</label>
+                    <input id="reg-phone" type="tel" placeholder="+91 98765 43210" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-platform">Delivery Platform</label>
+                    <select id="reg-platform" required>
+                        <option value="">Select Platform</option>
+                        <option value="zepto">Zepto</option>
+                        <option value="blinkit">Blinkit</option>
+                        <option value="swiggy">Swiggy Instamart</option>
+                        <option value="dunzo">Dunzo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-zone">Operating Zone</label>
+                    <select id="reg-zone" required>
+                        <option value="">Select Zone</option>
+                        <option value="low">Low Risk (Safe Zone)</option>
+                        <option value="medium">Medium Risk (Urban Core)</option>
+                        <option value="high">High Risk (Flood-Prone)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-vehicle">Vehicle Type</label>
+                    <select id="reg-vehicle" required>
+                        <option value="">Select Vehicle</option>
+                        <option value="bicycle">Bicycle</option>
+                        <option value="ebike">E-Bike</option>
+                        <option value="bike">Motorcycle</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-city">City</label>
+                    <select id="reg-city" required>
+                        <option value="">Select City</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="chennai">Chennai</option>
+                        <option value="kolkata">Kolkata</option>
+                        <option value="hyderabad">Hyderabad</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="premium-preview" id="premium-preview" style="display:none;">
+                <div class="preview-label">Estimated Weekly Premium</div>
+                <div class="preview-amount" id="preview-amount">--</div>
+                <div class="preview-breakdown" id="preview-breakdown"></div>
+            </div>
+
+            <button type="submit" id="reg-btn" class="btn btn-primary btn-full" disabled>
+                Calculate Premium &amp; Register →
+            </button>
+        </form>
+    </div>
+    <p class="fine-print">*Income protection only. Excludes vehicle, health &amp; accident claims.</p>
+</div>
+
+<!-- Loading Overlay -->
+<div id="page-transition">
+    <div class="pt-icon"></div>
+    <div class="pt-logo">AquaGuard</div>
+    <div class="pt-spinner"></div>
+    <div class="pt-bar-wrap"><div class="pt-bar" id="pt-bar"></div></div>
+    <div class="pt-status" id="pt-status">Initializing your policy...</div>
+</div>
+
+<script>
+'use strict';
+
+const BASE_PREMIUM = 49;
+const ZONE_RISK    = { low: -4, medium: 0, high: 8 };
+const VEHICLE_MULT = { bicycle: 0.95, ebike: 0.98, bike: 1.02 };
+const CITY_RISK    = { mumbai: 3, kolkata: 2, chennai: 2, delhi: 1, bangalore: 0, hyderabad: 0 };
+
+document.addEventListener('DOMContentLoaded', () => {
+    ['reg-name','reg-phone','reg-platform','reg-zone','reg-vehicle','reg-city'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.addEventListener('change', onFormChange); el.addEventListener('input', onFormChange); }
+    });
+});
+
+function onFormChange() {
+    const name     = document.getElementById('reg-name').value.trim();
+    const phone    = document.getElementById('reg-phone').value.trim();
+    const platform = document.getElementById('reg-platform').value;
+    const zone     = document.getElementById('reg-zone').value;
+    const vehicle  = document.getElementById('reg-vehicle').value;
+    const city     = document.getElementById('reg-city').value;
+    const btn      = document.getElementById('reg-btn');
+
+    if (name && phone && platform && zone && vehicle && city) {
+        btn.disabled = false;
+        showPremiumPreview(zone, vehicle, city);
+    } else {
+        btn.disabled = true;
+        document.getElementById('premium-preview').style.display = 'none';
     }
-    logDiv.scrollTop = logDiv.scrollHeight;
 }
-        
-    </script>
+
+function calculatePremium(zone, vehicle, city) {
+    let p = BASE_PREMIUM;
+    p += ZONE_RISK[zone] || 0;
+    p *= VEHICLE_MULT[vehicle] || 1;
+    p += CITY_RISK[city] || 0;
+    const mlAdj = (Math.random() * 4 - 2).toFixed(2);
+    p = Math.max(35, p + parseFloat(mlAdj));
+    return parseFloat(p.toFixed(2));
+}
+
+function showPremiumPreview(zone, vehicle, city) {
+    const premium    = calculatePremium(zone, vehicle, city);
+    const zoneAdj    = ZONE_RISK[zone];
+    const cityAdj    = CITY_RISK[city] || 0;
+    const vehicleDisc = ((VEHICLE_MULT[vehicle] - 1) * BASE_PREMIUM).toFixed(2);
+    document.getElementById('preview-amount').textContent = `₹${premium.toFixed(2)}/week`;
+    document.getElementById('preview-breakdown').innerHTML =
+        `Base: ₹${BASE_PREMIUM} &nbsp;|&nbsp; Zone: ${zoneAdj >= 0 ? '+' : ''}₹${zoneAdj} &nbsp;|&nbsp; City Risk: +₹${cityAdj} &nbsp;|&nbsp; Vehicle: ${parseFloat(vehicleDisc) >= 0 ? '+' : ''}₹${vehicleDisc} &nbsp;|&nbsp; <span style="color:var(--purple)">AI Adj: ±₹2.00</span>`;
+    document.getElementById('premium-preview').style.display = 'block';
+}
+
+function handleRegistration(e) {
+    e.preventDefault();
+    const worker = {
+        name:     document.getElementById('reg-name').value.trim(),
+        phone:    document.getElementById('reg-phone').value.trim(),
+        platform: document.getElementById('reg-platform').value,
+        zone:     document.getElementById('reg-zone').value,
+        vehicle:  document.getElementById('reg-vehicle').value,
+        city:     document.getElementById('reg-city').value
+    };
+    const premium = calculatePremium(worker.zone, worker.vehicle, worker.city);
+    const history = [premium + 3, premium + 1, premium - 2, premium].map(v => Math.max(35, v));
+
+    const session = {
+        worker,
+        premium,
+        policyId:    'AG-' + Date.now().toString().slice(-6),
+        policyStart: new Date().toISOString(),
+        policyEnd:   new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        premiumHistory: history,
+        savingsHistory: [0, 250, 0, 250],
+        savings: 0,
+        claimsCount: 0,
+        alertCount: 0
+    };
+    localStorage.setItem('aquaguard_session', JSON.stringify(session));
+
+    // Run loading transition, then open dashboard in new tab
+    runTransition(() => {
+        window.open('dashboard.html', '_blank');
+    });
+}
+
+function runTransition(callback) {
+    const overlay = document.getElementById('page-transition');
+    const bar     = document.getElementById('pt-bar');
+    const status  = document.getElementById('pt-status');
+    const card    = document.getElementById('reg-card');
+
+    const steps = [
+        'Calculating your risk profile...',
+        'Running XGBoost pricing model...',
+        'Fetching hyper-local risk data...',
+        'Generating your policy ID...',
+        'Setting up live environmental monitor...',
+        'Ready! Opening your dashboard...'
+    ];
+
+    // Fade out the card
+    card.style.transition = 'opacity 0.3s, transform 0.3s';
+    card.style.opacity    = '0';
+    card.style.transform  = 'scale(0.97) translateY(-12px)';
+
+    setTimeout(() => {
+        overlay.classList.add('show');
+        bar.style.width = '0%';
+        status.textContent = steps[0];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            i++;
+            if (i < steps.length) {
+                status.textContent = steps[i];
+                bar.style.width = `${Math.round((i / steps.length) * 90)}%`;
+            }
+        }, 200);
+
+        setTimeout(() => {
+            clearInterval(interval);
+            bar.style.width = '100%';
+            status.textContent = steps[steps.length - 1];
+            setTimeout(() => { callback(); }, 400);
+        }, 1400);
+    }, 320);
+}
+</script>
 </body>
 </html>

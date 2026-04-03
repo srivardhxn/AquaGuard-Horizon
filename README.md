@@ -1,33 +1,28 @@
-# 🛡️ ShieldGig AI: Hyper-Local Income Protection for Q-Commerce
+# AquaGuard: Hyper-Local Income Protection for Q-Commerce
 
 ## Inspiration
-India’s delivery partners are the backbone of the digital economy but lose up to 30% of their earnings to uncontrollable disruptions like extreme weather. We were inspired by the "Seed-Scale-Soar" philosophy to build a safety net that operates as fast as they do—week-to-week.
+India’s delivery partners are the backbone of the digital economy but lose up to 30% of their earnings to uncontrollable disruptions like extreme weather. AquaGuard by Team Horizon provides a localized safety net that operates as fast as they do—on a week-to-week basis.
 
 ## What it does
-ShieldGig AI is an AI-powered parametric insurance platform designed for Q-Commerce partners (Zepto, Blinkit). It provides automated income protection against environmental and social disruptions.
+AquaGuard is an AI-powered parametric insurance platform designed for Q-Commerce partners (Zepto, Blinkit, Swiggy, Dunzo). It delivers automated income protection against environmental and social disruptions.
 
-- **Weekly Pricing**: A micro-premium model (e.g., $P_w$) that matches the worker’s payout cycle.
-- **Zero-Touch Claims**: No paperwork. If a parametric trigger (like heavy rain > 15mm/hr) is met, the system automatically initiates a payout.
-- **Adversarial Defense**: Uses "Sensor Fusion" to detect GPS spoofing and fraud rings.
+- **Weekly Pricing**: A micro-premium model matching the worker’s payout cycle.
+- **Zero-Touch Claims**: No paperwork. If a parametric trigger (e.g., Heavy Rain > 15mm/hr, Flood, Strike, Heat) is met via public APIs, the system automatically processes and approves a payout.
+- **Dynamic AI Adjustments**: Premiums are tuned dynamically by simulated XGBoost models tracking risk score factors based on geography, weather history, and vehicle type.
+- **Fraud Engine**: Integrated sensor telemetry simulation to decline fraudulent claims automatically.
 
 ## How we built it
-- **Frontend**: Mobile-first design cleanly built with **HTML** and **CSS** for instant, on-the-go accessibility without heavy frameworks.
-- **Backend**: A robust **Java** architecture featuring a weekly cron job for premium "burn" and seamless payout cycles.
-- **AI/ML**: Predictive modeling powered by **Scikit-Learn** and **XGBoost** to calculate dynamic premiums based on hyper-local risk zones.
-- **Database**: **PostgreSQL** schema configured to securely handle and query high volumes of user, geospatial, and transactional data.
-- **Parametric Logic**: Integrated OpenWeatherMap and mock Traffic APIs for real-time monitoring and trigger events.
-
-## Challenges we ran into
-The biggest challenge was the Phase 1 Market Crash—preventing coordinated fraud. We had to pivot from simple GPS pings to a multi-layered verification system. We also had to ensure we strictly excluded vehicle or health coverage to stay compliant with Guidewire's constraints.
+- **Architecture**: A multi-page dynamic web interface leveraging `localStorage` to securely pass context and simulate a full application lifecycle from onboarding to live monitoring.
+- **Frontend Design**: Built with pure HTML, CSS, and Vanilla JavaScript. Features a premium, enterprise-grade dark glassmorphism aesthetic complete with deep ambient glows, modern typography, and a polished, icon-free professional visual identity.
+- **Parametric Logic**: Seamless integration with five simulated live environment APIs (OpenWeatherMap, Traffic Disruption, IMD Flood Alerts, Civic Strikes, and NDMA Heat Advisory).
+- **Backend Ready**: The core repository contains foundation structures (Java & PostgreSQL) to scale the product past the prototype phase and into a real-world enterprise deployment.
 
 ## Accomplishments that we're proud of
-- **Automated Claims**: Achieving a "zero-touch" experience where a worker is notified of their payout before they even have to ask.
-- **Dynamic Risk Model**: Building a formula that adjusts premiums weekly based on hyper-local waterlogging history.
-- **Anti-Spoofing Architecture**: Designing logic that flags "Impossible Travel" and coordinated fraud rings.
+- **Automated Claims Pipeline**: Achieving a transparent zero-touch claim lifecycle that simulates API polling, risk scoring, trigger verification, and payout initiation without any manual intervention.
+- **Highly Responsive UI/UX**: The application provides an engaging user journey, progressing from registration through a sleek loading overlay into a fully-featured, live-updating dashboard.
+- **Custom Aesthetic Branding**: Successfully pivoting to a highly credible, strict enterprise-grade interface.
 
-## What we learned
-We learned the complexity of "Parametric Insurance"—that it’s not about the damage, but the trigger. We also learned to treat our hackathon project as a startup, managing our DC 1,00,000 budget against weekly operational "burn".
-
-## What's next for ShieldGig AI
-- **Phase 2 Expansion**: Full integration of dynamic pricing models based on hyper-local weather.
-- **Phase 3 Scaling**: Implementing instant payout systems through UPI simulators to get money to workers in minutes.
+## What's next for AquaGuard
+- **Phase 3 Scaling**: Implementing instant payout gateways using real UPI simulators.
+- **Backend Migration**: Shifting our local `localStorage` architecture to fully persist data mapping across the integrated PostgreSQL databases.
+- **Real API Access**: Transitioning away from randomized mock data streams towards enterprise subscriptions for real-time weather and traffic disruption accuracy.

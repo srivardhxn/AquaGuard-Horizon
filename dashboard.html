@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaGuard | Dashboard — Protect Your Worker</title>
+    <meta name="description"
+        content="AquaGuard by Team Horizon — Your live worker protection dashboard with AI risk scoring, dynamic premiums, and zero-touch claims.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: var(--bg-base);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">AquaGuard</div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('dashboard-home')" id="tab-home">Dashboard</button>
+            <button class="nav-tab" onclick="showSection('dashboard-policy')" id="tab-policy">My Policy</button>
+            <button class="nav-tab" onclick="showSection('dashboard-claims')" id="tab-claims">Claims</button>
+            <button class="nav-tab" onclick="showSection('dashboard-alerts')" id="tab-alerts">Live Alerts <span
+                    class="badge" id="alertBadge">0</span></button>
+        </div>
+        <button class="btn btn-sm btn-outline" onclick="logout()">Logout</button>
+    </nav>
+
+    <!-- HOME SECTION -->
+    <section id="dashboard-home" class="dash-section active">
+        <div class="dash-grid">
+            <div class="dash-col-main">
+                <div class="card glass-card">
+                    <div class="worker-info">
+                        <div class="worker-avatar" id="dash-avatar">R</div>
+                        <div>
+                            <h2 id="dash-name">--</h2>
+                            <p id="dash-platform" class="text-muted"></p>
+                            <span class="badge-active">Coverage Active</span>
+                        </div>
+                    </div>
+                    <div class="worker-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Weekly Premium</span>
+                            <span class="stat-value" id="dash-premium">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Coverage</span>
+                            <span class="stat-value">₹2,500/week</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Savings Earned</span>
+                            <span class="stat-value text-green" id="dash-savings">₹0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Claims Approved</span>
+                            <span class="stat-value" id="dash-claims-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card glass-card">
+                    <div class="card-header-sm">
+                        <h3>Live Environmental Monitor</h3>
+                        <span class="live-dot">● LIVE</span>
+                    </div>
+                    <div class="env-grid" id="env-grid">
+                        <div class="env-card" id="env-rain">
+                            <div class="env-icon"></div>
+                            <div class="env-label">Rainfall</div>
+                            <div class="env-value" id="val-rain">-- mm/hr</div>
+                            <div class="env-bar">
+                                <div class="env-fill" id="fill-rain" style="width:0%"></div>
+                            </div>
+                        </div>
+                        <div class="env-card" id="env-traffic">
+                            <div class="env-icon"></div>
+                            <div class="env-label">Traffic Index</div>
+                            <div class="env-value" id="val-traffic">--</div>
+                            <div class="env-bar">
+                                <div class="env-fill" id="fill-traffic" style="width:0%"></div>
+                            </div>
+                        </div>
+                        <div class="env-card" id="env-flood">
+                            <div class="env-icon"></div>
+                            <div class="env-label">Flood Alert</div>
+                            <div class="env-value" id="val-flood">Monitoring</div>
+                            <div class="env-status" id="status-flood">NORMAL</div>
+                        </div>
+                        <div class="env-card" id="env-strike">
+                            <div class="env-icon"></div>
+                            <div class="env-label">Disruption Alert</div>
+                            <div class="env-value" id="val-strike">Scanning</div>
+                            <div class="env-status" id="status-strike">NORMAL</div>
+                        </div>
+                        <div class="env-card" id="env-heat">
+                            <div class="env-icon"></div>
+                            <div class="env-label">Heat Index</div>
+                            <div class="env-value" id="val-heat">-- °C</div>
+                            <div class="env-bar">
+                                <div class="env-fill env-fill-heat" id="fill-heat" style="width:0%"></div>
+                            </div>
+                        </div>
+                        <div class="env-card" id="env-curfew">
+                            <div class="env-icon"></div>
+                            <div class="env-label">Zone Access</div>
+                            <div class="env-value" id="val-curfew">Open</div>
+                            <div class="env-status" id="status-curfew">NORMAL</div>
+                        </div>
+                    </div>
+                    <div class="refresh-bar">
+                        <button class="btn btn-sm btn-ghost" onclick="refreshEnvironment()">Refresh Now</button>
+                        <span class="text-muted text-xs" id="last-refresh">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-col-side">
+                <div class="card glass-card">
+                    <div class="card-header-sm">
+                        <h3>AI Risk Score</h3>
+                    </div>
+                    <div class="risk-gauge">
+                        <canvas id="riskCanvas" width="180" height="100"></canvas>
+                        <div class="risk-label">
+                            <span class="risk-num" id="risk-num">--</span>
+                            <span class="risk-text" id="risk-text">Calculating...</span>
+                        </div>
+                    </div>
+                    <div class="risk-factors">
+                        <div class="factor-row"><span>Zone Safety</span><span class="factor-val" id="f-zone">--</span>
+                        </div>
+                        <div class="factor-row"><span>Weather Pattern</span><span class="factor-val"
+                                id="f-weather">--</span></div>
+                        <div class="factor-row"><span>Traffic Density</span><span class="factor-val"
+                                id="f-traffic">--</span></div>
+                        <div class="factor-row"><span>Historical Claims</span><span class="factor-val"
+                                id="f-history">Low</span></div>
+                    </div>
+                </div>
+                <div class="card glass-card">
+                    <div class="card-header-sm">
+                        <h3>Activity Log</h3>
+                    </div>
+                    <div class="log-terminal" id="activity-log">
+                        <p class="log-line log-info">&gt; AquaGuard AI initialized...</p>
+                        <p class="log-line log-info">&gt; XGBoost dynamic pricing model loaded</p>
+                        <p class="log-line log-info">&gt; Monitoring 5 parametric triggers...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POLICY SECTION -->
+    <section id="dashboard-policy" class="dash-section">
+        <div class="container-full">
+            <div class="section-header">
+                <h2>My Insurance Policy</h2>
+                <p>Your active coverage and dynamic premium breakdown</p>
+            </div>
+            <div class="policy-grid">
+                <div class="card glass-card policy-main">
+                    <div class="policy-badge">ACTIVE POLICY</div>
+                    <div class="policy-id">Policy #<span id="policy-id-num">--</span></div>
+                    <div class="policy-holder"><span class="pol-label">Insured</span><span class="pol-val"
+                            id="pol-name">--</span></div>
+                    <div class="policy-holder"><span class="pol-label">Platform</span><span class="pol-val"
+                            id="pol-platform">--</span></div>
+                    <div class="policy-holder"><span class="pol-label">Zone</span><span class="pol-val"
+                            id="pol-zone">--</span></div>
+                    <div class="policy-holder"><span class="pol-label">Valid From</span><span class="pol-val"
+                            id="pol-start">--</span></div>
+                    <div class="policy-holder"><span class="pol-label">Valid Until</span><span class="pol-val"
+                            id="pol-end">--</span></div>
+                    <div class="coverage-box">
+                        <h4>Coverage Includes</h4>
+                        <ul class="coverage-list">
+                            <li>Heavy Rain / Storm Disruption</li>
+                            <li>Flooding / Waterlogging Events</li>
+                            <li>Civic Strikes &amp; Road Closures</li>
+                            <li>Extreme Heat Advisories</li>
+                            <li>Government-declared Curfews</li>
+                            <li>Vehicle Damage (Not Covered)</li>
+                            <li>Health &amp; Accident (Not Covered)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="policy-side">
+                    <div class="card glass-card">
+                        <h3>Dynamic Premium Calculator</h3>
+                        <p class="text-muted">AI adjusts your weekly premium based on hyper-local risk factors</p>
+                        <div class="premium-breakdown" id="premium-breakdown-full"></div>
+                        <div class="premium-total-box">
+                            <span>This Week's Premium</span>
+                            <span class="premium-total-val" id="premium-total-display">₹--</span>
+                        </div>
+                        <div class="ai-note">
+                            <span></span>
+                            <p id="ai-note-text">Loading AI analysis...</p>
+                        </div>
+                    </div>
+                    <div class="card glass-card">
+                        <h3>Premium History (4 Weeks)</h3>
+                        <canvas id="premiumChart" height="150"></canvas>
+                        <div class="chart-legend">
+                            <span class="leg-item"><span class="leg-dot leg-blue"></span>Premium (₹)</span>
+                            <span class="leg-item"><span class="leg-dot leg-green"></span>Savings</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLAIMS SECTION -->
+    <section id="dashboard-claims" class="dash-section">
+        <div class="container-full">
+            <div class="section-header">
+                <h2>Claims Management</h2>
+                <p>Zero-touch automated claim processing powered by AI</p>
+            </div>
+            <div class="claims-grid">
+                <div class="card glass-card claim-trigger-card">
+                    <h3>Simulate Parametric Trigger</h3>
+                    <p class="text-muted">Select a disruption event to simulate the automated claim process</p>
+                    <div class="trigger-buttons">
+                        <button class="trigger-btn" onclick="simulateClaim('rain')">
+                            <span class="trig-icon"></span><span class="trig-label">Heavy Rain</span><span
+                                class="trig-sub">Rainfall &gt; 15mm/hr</span>
+                        </button>
+                        <button class="trigger-btn" onclick="simulateClaim('flood')">
+                            <span class="trig-icon"></span><span class="trig-label">Flash Flood</span><span
+                                class="trig-sub">Zone waterlogged</span>
+                        </button>
+                        <button class="trigger-btn" onclick="simulateClaim('strike')">
+                            <span class="trig-icon"></span><span class="trig-label">Civic Strike</span><span
+                                class="trig-sub">Road closures &gt;4hrs</span>
+                        </button>
+                        <button class="trigger-btn" onclick="simulateClaim('heat')">
+                            <span class="trig-icon"></span><span class="trig-label">Extreme Heat</span><span
+                                class="trig-sub">Heat index &gt;47°C</span>
+                        </button>
+                        <button class="trigger-btn" onclick="simulateClaim('curfew')">
+                            <span class="trig-icon"></span><span class="trig-label">Curfew Lockdown</span><span
+                                class="trig-sub">Govt. restriction</span>
+                        </button>
+                        <button class="trigger-btn trigger-fraud" onclick="simulateClaim('fraud')">
+                            <span class="trig-icon"></span><span class="trig-label">Test Fraud</span><span
+                                class="trig-sub">Sensor mismatch</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="card glass-card claim-process-card">
+                    <h3>Claim Processing Pipeline</h3>
+                    <div id="claim-pipeline">
+                        <div class="pipeline-idle">
+                            <div class="pipeline-idle-icon"></div>
+                            <p>Select a trigger to simulate zero-touch claim processing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card glass-card claim-history-card">
+                    <h3>Claims History</h3>
+                    <div id="claims-history-list">
+                        <p class="text-muted text-center" id="no-claims-msg">No claims processed yet. Simulate a trigger
+                            above.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALERTS SECTION -->
+    <section id="dashboard-alerts" class="dash-section">
+        <div class="container-full">
+            <div class="section-header">
+                <h2>Live Disruption Alerts</h2>
+                <p>Real-time monitoring via mock public APIs — auto-claim triggers</p>
+            </div>
+            <div class="alerts-layout">
+                <div class="card glass-card">
+                    <div class="card-header-sm">
+                        <h3>API Status Panel</h3>
+                        <button class="btn btn-sm btn-primary" onclick="fetchAllAlerts()"> Fetch All APIs</button>
+                    </div>
+                    <div class="api-list" id="api-list">
+                        <div class="api-item">
+                            <div class="api-dot dot-checking"></div>
+                            <div class="api-info"><strong>OpenWeatherMap API</strong><span
+                                    class="api-url">api.openweathermap.org/weather</span></div>
+                            <div class="api-status" id="api-weather-status">Idle</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-dot dot-checking"></div>
+                            <div class="api-info"><strong>Traffic Disruption API</strong><span
+                                    class="api-url">mock.trafficapi.in/disruptions</span></div>
+                            <div class="api-status" id="api-traffic-status">Idle</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-dot dot-checking"></div>
+                            <div class="api-info"><strong>IMD Flood Alert API</strong><span
+                                    class="api-url">imd.gov.in/api/floodalert</span></div>
+                            <div class="api-status" id="api-flood-status">Idle</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-dot dot-checking"></div>
+                            <div class="api-info"><strong>Civic Strike Monitor</strong><span
+                                    class="api-url">mock.civicapi.in/strikes</span></div>
+                            <div class="api-status" id="api-strike-status">Idle</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-dot dot-checking"></div>
+                            <div class="api-info"><strong>Heat Advisory API</strong><span
+                                    class="api-url">mock.ndma.gov.in/heat</span></div>
+                            <div class="api-status" id="api-heat-status">Idle</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card glass-card">
+                    <div class="card-header-sm">
+                        <h3>Alert Feed</h3><span class="live-dot">● LIVE</span>
+                    </div>
+                    <div class="alert-feed" id="alert-feed">
+                        <p class="text-muted">Waiting for API data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLAIM MODAL -->
+    <div id="claim-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <div class="modal-icon" id="modal-icon"></div>
+            <h2 id="modal-title">Claim Approved!</h2>
+            <p id="modal-body">Your payout has been processed.</p>
+            <div class="modal-amount" id="modal-amount">₹250.00</div>
+            <p class="modal-sub" id="modal-sub">Amount will be credited via UPI within 60 seconds</p>
+            <button class="btn btn-primary" onclick="closeModal()">Done</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
