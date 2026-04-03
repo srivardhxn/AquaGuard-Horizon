@@ -26,3 +26,6 @@ AquaGuard is an AI-powered parametric insurance platform designed for Q-Commerce
 - **Phase 3 Scaling**: Implementing instant payout gateways using real UPI simulators.
 - **Backend Migration**: Shifting our local `localStorage` architecture to fully persist data mapping across the integrated PostgreSQL databases.
 - **Real API Access**: Transitioning away from randomized mock data streams towards enterprise subscriptions for real-time weather and traffic disruption accuracy.
+
+## Deployed Link 
+https://priyanshuroy2004.github.io/AquaGuard-Horizon/
